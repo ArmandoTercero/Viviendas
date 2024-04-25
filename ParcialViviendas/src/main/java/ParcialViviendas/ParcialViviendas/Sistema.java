@@ -46,9 +46,23 @@ public class Sistema {
 		return p;
 	}
 	
-	public List<Contrato> contratosDeCliente(Cliente c) {
+	private List<Contrato> contratosDeCliente(Cliente c) {
 		return this.contratos.stream()
 				.filter(contrato -> contrato.contieneCliente(c))
 				.collect(Collectors.toList());
 	}
+	
+	public double montoAPagarDeUnCliente(Cliente cliente) {
+		return this.contratosDeCliente(cliente).stream()
+			.mapToDouble(contrato -> contrato.monto())
+			.sum();
+	}
+	
+	public List<Servicio> serviciosConMontoMayor(double valor) {
+		return this.servicios.stream()
+				.filter(servicio -> servicio.montoMayorQue(valor))
+				.collect(Collectors.toList());
+	}
+	
+	
 }
